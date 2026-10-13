@@ -169,15 +169,6 @@ body.editing .edbar{display:flex}
 .edbtn.primary:hover{background:#B85F2E}
 .edbtn.danger:hover{border-color:#C0392B;color:#C0392B}
 
-/* 右上角编辑开关 */
-.edtog{
-  margin-left:auto;display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;
-  padding:5.5px 12px;border:1.4px solid var(--line);border-radius:8px;background:#fff;
-  font-size:12.5px;color:var(--ink2);transition:all .15s;flex:0 0 auto;
-}
-.edtog:hover{border-color:var(--brand);color:var(--brand2)}
-.edtog.on{background:var(--brand2);border-color:var(--brand2);color:#fff}
-
 /* 可拖拽状态 */
 body.editing .pin{cursor:grab}
 body.editing .pin:active{cursor:grabbing}
@@ -260,7 +251,6 @@ body.editing.dragging .crosshair{display:block}
         <h1>延庆咖啡地图</h1>
         <div class="sub">14 家乡镇村咖 · 点标记看详情 · 数据整理 2026-10</div>
       </div>
-      <div class="edtog" id="edtog" onclick="toggleEdit()">✎ 编辑位置</div>
     </div>
 
     <!-- 编辑工具条 -->
@@ -697,7 +687,6 @@ window.addEventListener("pointercancel", onUp);
 function toggleEdit(){
   EDITING = !EDITING;
   document.body.classList.toggle("editing", EDITING);
-  document.getElementById("edtog").classList.toggle("on", EDITING);
   if (EDITING) {
     closeM();
     toast("编辑模式已开启：拖动咖啡杯调整位置");
