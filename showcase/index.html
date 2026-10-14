@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北京延庆村咖地图 · 20 家咖啡店全收录</title>
+<meta name="description" content="北京延庆区 20 家乡村咖啡店完整指南：地址、特色、营业时间、宠物友好情况，配套手绘分区地图。">
+<meta property="og:title" content="北京延庆村咖地图 · 20 家咖啡店全收录">
+<meta property="og:description" content="延庆乡村咖啡店完整指南，配套可离线查询的手绘交互地图。">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#C96F3B; --brand2:#8B4A22; --ink:#2E2622; --ink2:#6B5B51; --ink3:#9A8B80;
+  --bg:#FDF8F2; --card:#FFFDF9; --line:#EFDFCF; --gold:#D8A05A;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ── Hero ── */
+header{
+  background:linear-gradient(160deg,#FFF6EC 0%,#FBEBDA 60%,#F5DFC9 100%);
+  border-bottom:1px solid var(--line); padding:56px 0 44px; position:relative; overflow:hidden;
+}
+header::after{
+  content:""; position:absolute; right:-80px; top:-60px; width:320px; height:320px;
+  background:radial-gradient(circle,rgba(201,111,59,.10),transparent 68%); border-radius:50%;
+}
+.tag{
+  display:inline-block; background:var(--brand); color:#fff; font-size:12px; font-weight:700;
+  letter-spacing:2px; padding:5px 14px; border-radius:20px; margin-bottom:16px;
+}
+h1{font-size:38px; font-weight:800; letter-spacing:-.5px; line-height:1.25; margin-bottom:14px}
+h1 em{font-style:normal; color:var(--brand)}
+.lead{font-size:16px; color:var(--ink2); max-width:640px; margin-bottom:26px}
+.stats{display:flex; gap:34px; flex-wrap:wrap; margin-bottom:28px}
+.stat b{display:block; font-size:30px; font-weight:800; color:var(--brand); line-height:1.2}
+.stat span{font-size:13px; color:var(--ink3)}
+.cta{
+  display:inline-flex; align-items:center; gap:9px; background:var(--brand); color:#fff;
+  font-size:15px; font-weight:700; text-decoration:none; padding:13px 26px; border-radius:11px;
+  box-shadow:0 5px 18px rgba(201,111,59,.28); transition:.18s;
+}
+.cta:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,111,59,.36)}
+.cta.sec{background:transparent; color:var(--brand); border:1.8px solid var(--brand); box-shadow:none}
+.cta.sec:hover{background:var(--brand); color:#fff}
+
+/* ── 区块 ── */
+section{padding:52px 0; border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+h2{
+  font-size:26px; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:11px;
+}
+h2::before{content:""; width:5px; height:26px; background:var(--brand); border-radius:3px}
+.sub{color:var(--ink2); font-size:14px; margin-bottom:26px}
+
+/* ── 地图 ── */
+.mapbox{
+  background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden;
+  box-shadow:0 3px 16px rgba(160,120,90,.07);
+}
+.mapbox iframe{width:100%; height:620px; border:0; display:block; background:#FBF3EA}
+.mapbar{
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  padding:13px 18px; background:#FBF3EA; border-bottom:1px solid var(--line); font-size:13px;
+}
+.mapbar a{color:var(--brand); font-weight:700; text-decoration:none}
+.mapbar a:hover{text-decoration:underline}
+
+/* ── 筛选 ── */
+.filters{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:12px}
+.chip{
+  border:1.5px solid var(--line); background:var(--card); color:var(--ink2);
+  font:inherit; font-size:13px; padding:7px 15px; border-radius:20px; cursor:pointer; transition:.16s;
+}
+.chip b{color:var(--brand); margin-left:3px}
+.chip:hover{border-color:var(--brand); color:var(--brand)}
+.chip.on{background:var(--brand); border-color:var(--brand); color:#fff}
+.chip.on b{color:#FFE4CE}
+.search{
+  width:100%; padding:12px 16px; border:1.5px solid var(--line); border-radius:11px;
+  font:inherit; font-size:14px; background:var(--card); margin-bottom:24px; outline:none;
+}
+.search:focus{border-color:var(--brand)}
+.count{font-size:13px; color:var(--ink3); margin-bottom:16px}
+
+/* ── 卡片 ── */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:17px}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:15px; padding:19px 20px;
+  transition:.2s; position:relative;
+}
+.card:hover{transform:translateY(-3px); box-shadow:0 10px 28px rgba(160,120,90,.13); border-color:var(--gold)}
+.card-hd{display:flex; gap:13px; align-items:flex-start; margin-bottom:11px}
+.card-no{
+  flex:none; width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center;
+}
+.card-t h3{font-size:17px; font-weight:800; line-height:1.35}
+.card-area{font-size:12px; color:var(--ink3); margin-top:2px}
+.badge-new{
+  display:inline-block; font-size:10px; font-weight:800; background:#E8F5E9; color:#2E7D32;
+  padding:2px 7px; border-radius:5px; margin-left:6px; vertical-align:2px; letter-spacing:.5px;
+}
+.stars{font-size:13px; color:var(--gold); letter-spacing:1px; margin-bottom:5px}
+.rat-note{font-size:12.5px; color:var(--ink2); margin-bottom:13px; font-style:italic}
+.card dl{display:flex; flex-direction:column; gap:9px}
+.card dl > div{display:flex; gap:9px; font-size:13px}
+.card dt{flex:none; width:52px; color:var(--ink3); font-size:12px; padding-top:1px}
+.card dd{flex:1; color:var(--ink); line-height:1.6}
+
+/* ── 表格 ── */
+.tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:13px; background:var(--card)}
+table{width:100%; border-collapse:collapse; font-size:13px; min-width:720px}
+th{
+  background:#FBF3EA; color:var(--brand2); font-weight:700; text-align:left;
+  padding:11px 14px; border-bottom:1.5px solid var(--line); white-space:nowrap;
+}
+td{padding:11px 14px; border-bottom:1px solid #F5EDE4; vertical-align:top; line-height:1.6}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#FDF6EE}
+td.nm{font-weight:700; white-space:nowrap}
+td.fi,td.fs{color:var(--ink3); white-space:nowrap; font-variant-numeric:tabular-nums}
+td.fn{font-weight:600; white-space:nowrap}
+
+/* ── Footer ── */
+footer{padding:38px 0 30px; text-align:center; color:var(--ink3); font-size:13px; line-height:2}
+footer a{color:var(--brand); text-decoration:none; font-weight:600}
+footer a:hover{text-decoration:underline}
+.disclaim{
+  background:#FFF4E4; border:1px solid #F0DCC0; border-radius:11px;
+  padding:14px 18px; font-size:12.5px; color:#8A6A3A; margin-top:24px; line-height:1.8;
+}
+@media(max-width:768px){
+  h1{font-size:27px} .stats{gap:22px} .stat b{font-size:25px}
+  .mapbox iframe{height:440px} section{padding:38px 0}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="tag">☕ 延庆 · 乡村咖啡</div>
+    <h1>北京<em>延庆村咖</em>地图<br>20 家咖啡店全收录</h1>
+    <p class="lead">
+      从张山营的民宿咖啡，到长城脚下的柯基主题馆——我们把延庆散落在山谷村落里的咖啡店
+      整理成一份能直接用的指南，并配了一张手绘分区地图。
+    </p>
+    <div class="stats">
+      <div class="stat"><b>20</b><span>收录咖啡店</span></div>
+      <div class="stat"><b>8</b><span>覆盖乡镇片区</span></div>
+      <div class="stat"><b>6</b><span>本期新增</span></div>
+      <div class="stat"><b>100%</b><span>离线可用</span></div>
+    </div>
+    <a class="cta" href="https://hydemonw.github.io/yanqing-cafe-map/" target="_blank" rel="noopener">🗺️ 打开交互地图</a>
+    <a class="cta sec" href="#list" style="margin-left:10px">📋 看完整清单</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>🗺️ 手绘交互地图</h2>
+    <p class="sub">点击查看任意咖啡杯，会弹出这家店的详细信息；支持按片区、关键词搜索。</p>
+    <div class="mapbox">
+      <div class="mapbar">
+        <span>地图已发布 · 手机 / 电脑都能打开 · 无需联网</span>
+        <a href="https://hydemonw.github.io/yanqing-cafe-map/" target="_blank" rel="noopener">hydemonw.github.io/yanqing-cafe-map/ ↗</a>
+      </div>
+      <iframe src="https://hydemonw.github.io/yanqing-cafe-map/" loading="lazy" title="延庆咖啡地图"
+        onerror="this.style.display='none';document.getElementById('mapfb').style.display='block'"></iframe>
+      <div id="mapfb" style="display:none;padding:44px 20px;text-align:center;background:#FBF3EA">
+        <p style="color:var(--ink2);margin-bottom:14px">地图预览需要在支持的浏览器中打开</p>
+        <a class="cta" href="https://hydemonw.github.io/yanqing-cafe-map/" target="_blank" rel="noopener">🗺️ 前往查看完整地图</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="list">
+  <div class="wrap">
+    <h2>☕ 20 家咖啡店清单</h2>
+    <p class="sub">按片区或关键词筛选，点卡片看详细信息。</p>
+    <div class="filters">
+      <button class="chip on" data-a="all">全部 <b>20</b></button>
+      <button class="chip" data-a="张山营">张山营 <b>5</b></button><button class="chip" data-a="八达岭">八达岭 <b>4</b></button><button class="chip" data-a="刘斌堡">刘斌堡 <b>3</b></button><button class="chip" data-a="四海">四海 <b>2</b></button><button class="chip" data-a="康庄">康庄 <b>2</b></button><button class="chip" data-a="永宁">永宁 <b>1</b></button><button class="chip" data-a="大庄科">大庄科 <b>1</b></button><button class="chip" data-a="井庄">井庄 <b>1</b></button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="输入店名、地址或特色关键词，例如「长城」「宠物」「落日」…">
+    <div class="count" id="cnt">共 20 家</div>
+    <div class="grid" id="grid">
+  <article class="card" data-area="张山营" data-text="山野咖啡 张山营 延庆区张山营镇后黑龙庙村5号（大隐于世民宿接待中心） 京郊山野咖啡代表：老旧瓦房改造，大玻璃把街景框成画，草坪晒太阳、安静发呆">
+    <div class="card-hd">
+      <div class="card-no">1</div>
+      <div class="card-t">
+        <h3>山野咖啡</h3>
+        <div class="card-area">张山营</div>
+      </div>
+    </div>
+    <div class="stars">★★★</div>
+    <p class="rat-note">民宿配套</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区张山营镇后黑龙庙村5号（大隐于世民宿接待中心）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 下午茶，无正餐</dd></div>
+      <div><dt>🐾 宠物</dt><dd>无</dd></div>
+      <div><dt>✨ 特色</dt><dd>京郊山野咖啡代表：老旧瓦房改造，大玻璃把街景框成画，草坪晒太阳、安静发呆</dd></div>
+      <div><dt>🕐 营业</dt><dd>10:00–19:30（公开信息，建议行前确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>民宿咖啡价位</dd></div>
+      <div><dt>📞 联系</dt><dd>建议联系民宿确认</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="张山营" data-text="西西里的厨房 张山营 延庆区张山营镇后黑龙庙村一区47号 田园农场主题农文旅融合餐饮点：有机蔬菜园、网红景观打卡点，可容纳80人同时就餐">
+    <div class="card-hd">
+      <div class="card-no">2</div>
+      <div class="card-t">
+        <h3>西西里的厨房</h3>
+        <div class="card-area">张山营</div>
+      </div>
+    </div>
+    <div class="stars">★★★★★</div>
+    <p class="rat-note">咖啡种类多，美食佳，网红打卡点</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区张山营镇后黑龙庙村一区47号</dd></div>
+      <div><dt>🍽 餐食</dt><dd>法式风情西餐 +披萨，泰餐推荐打抛饭</dd></div>
+      <div><dt>🐾 宠物</dt><dd>有小猫、小狗等，还有宠物乐园</dd></div>
+      <div><dt>✨ 特色</dt><dd>田园农场主题农文旅融合餐饮点：有机蔬菜园、网红景观打卡点，可容纳80人同时就餐</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（民宿配套，建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>吃饭人均¥100-200</dd></div>
+      <div><dt>📞 联系</dt><dd>18610091915</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="张山营" data-text="一和里（su遇咖啡） 张山营 延庆区张山营镇苏庄村31号（近龙庆峡） 民宿配套咖啡厅：一院一景草木环绕，手冲体验 + 窑烤西餐 + 亲子萌宠互动">
+    <div class="card-hd">
+      <div class="card-no">3</div>
+      <div class="card-t">
+        <h3>一和里（SU遇咖啡）</h3>
+        <div class="card-area">张山营</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">有图书室、小越野车</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区张山营镇苏庄村31号（近龙庆峡）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>手冲咖啡 + 窑烤披萨，意面等</dd></div>
+      <div><dt>🐾 宠物</dt><dd>院内有小猫与小兔子，小猫很会营业</dd></div>
+      <div><dt>✨ 特色</dt><dd>民宿配套咖啡厅：一院一景草木环绕，手冲体验 + 窑烤西餐 + 亲子萌宠互动</dd></div>
+      <div><dt>🕐 营业</dt><dd>约 9:30–18:30（季节/天气浮动，园区预约制）</dd></div>
+      <div><dt>💰 价格</dt><dd>¥30-70</dd></div>
+      <div><dt>📞 联系</dt><dd>一和里民宿（张山营苏庄村）</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="张山营" data-text="海坨山谷1473咖啡馆 张山营 延庆区张山营镇阎家坪村海坨山谷（京冀交界，海拔1473米，应该是出京了） 京郊最高咖啡馆（海拔1473米），芬兰小木屋，俯瞰海坨山全景；光污染少可看银河，日落/观星胜地">
+    <div class="card-hd">
+      <div class="card-no">4</div>
+      <div class="card-t">
+        <h3>海坨山谷1473咖啡馆</h3>
+        <div class="card-area">张山营</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">风景读好，就是得爬20分钟山，贵也值了</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区张山营镇阎家坪村海坨山谷（京冀交界，海拔1473米，应该是出京了）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>披萨 + 意面 + 小吃 + 咖啡/果蔬汁（含正餐）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>无</dd></div>
+      <div><dt>✨ 特色</dt><dd>京郊最高咖啡馆（海拔1473米），芬兰小木屋，俯瞰海坨山全景；光污染少可看银河，日落/观星胜地</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（新店，建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>爬那么高 贵也正常</dd></div>
+      <div><dt>📞 联系</dt><dd>需园区预约，行前务必确认</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="永宁" data-text="司昙咖啡 永宁 延庆区永宁镇四司村88号北房 2026年6月新开的窑炉咖啡小店，紧邻南山路边垣长城遗迹，可顺路探古">
+    <div class="card-hd">
+      <div class="card-no">5</div>
+      <div class="card-t">
+        <h3>司昙咖啡</h3>
+        <div class="card-area">永宁</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">能坐炕上吃喝</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区永宁镇四司村88号北房</dd></div>
+      <div><dt>🍽 餐食</dt><dd>窑炉披萨 + 咖啡饮品（2026年新开）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>无</dd></div>
+      <div><dt>✨ 特色</dt><dd>2026年6月新开的窑炉咖啡小店，紧邻南山路边垣长城遗迹，可顺路探古</dd></div>
+      <div><dt>🕐 营业</dt><dd>9:00–17:30（公开信息，建议行前确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>价格适中</dd></div>
+      <div><dt>📞 联系</dt><dd>新店信息少，建议先探店确认</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="刘斌堡" data-text="几个人咖啡 刘斌堡 延庆区刘斌堡乡山南沟村（大隐于世·净隐南山） 几个朋友在田间院落打造的村咖，古朴木窗、阳光斑驳，把生活调慢">
+    <div class="card-hd">
+      <div class="card-no">6</div>
+      <div class="card-t">
+        <h3>几个人咖啡</h3>
+        <div class="card-area">刘斌堡</div>
+      </div>
+    </div>
+    <div class="stars">★★★</div>
+    <p class="rat-note">人少</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区刘斌堡乡山南沟村（大隐于世·净隐南山）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 西式简餐，和西西里差不多</dd></div>
+      <div><dt>🐾 宠物</dt><dd>无</dd></div>
+      <div><dt>✨ 特色</dt><dd>几个朋友在田间院落打造的村咖，古朴木窗、阳光斑驳，把生活调慢</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（建议电话18910819927确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>和西西里菜单一样</dd></div>
+      <div><dt>📞 联系</dt><dd>18613323258</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="刘斌堡" data-text="麓舍（美式汉堡餐厅） 刘斌堡 延庆区刘斌堡乡山西沟村111号 院主周游世界后开的复古小院：老木梁、石墙、旧海报、黑胶唱片，进口食材做纯正美式快餐">
+    <div class="card-hd">
+      <div class="card-no">7</div>
+      <div class="card-t">
+        <h3>麓舍（美式汉堡餐厅）</h3>
+        <div class="card-area">刘斌堡</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">烤肉拼盘提前预约</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区刘斌堡乡山西沟村111号</dd></div>
+      <div><dt>🍽 餐食</dt><dd>美式汉堡 + 烤鸡 + 煎牛排（正餐充足）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>小猫很会营业，户外有小野猫</dd></div>
+      <div><dt>✨ 特色</dt><dd>院主周游世界后开的复古小院：老木梁、石墙、旧海报、黑胶唱片，进口食材做纯正美式快餐</dd></div>
+      <div><dt>🕐 营业</dt><dd>周二–周日 10:00–19:00（周一闭店）</dd></div>
+      <div><dt>💰 价格</dt><dd>价格适中</dd></div>
+      <div><dt>📞 联系</dt><dd>18910819927</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="四海" data-text="看山咖啡 四海 延庆区四海镇西沟里村43号（半山腰） 改造自闲置老房的半山腰咖啡屋，面朝山峦梯田，主理人返乡创业获北京市农村创业大赛奖项">
+    <div class="card-hd">
+      <div class="card-no">8</div>
+      <div class="card-t">
+        <h3>看山咖啡</h3>
+        <div class="card-area">四海</div>
+      </div>
+    </div>
+    <div class="stars">★★★★★</div>
+    <p class="rat-note">网红点，喝着咖啡看着山，就是位置远</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区四海镇西沟里村43号（半山腰）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 精致甜品 + 60h低温慢烤鸡肉（简餐正餐兼备）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>有2只小猫</dd></div>
+      <div><dt>✨ 特色</dt><dd>改造自闲置老房的半山腰咖啡屋，面朝山峦梯田，主理人返乡创业获北京市农村创业大赛奖项</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（民宿配套，建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>价格适中</dd></div>
+      <div><dt>📞 联系</dt><dd>山路较深，建议自驾并先确认营业</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="八达岭" data-text="石光咖啡厅 八达岭 延庆区八达岭镇石峡村（石光长城民宿内） 开在民宿边的咖啡店，木石结构、另有公益书店，户外露台抬头即见长城">
+    <div class="card-hd">
+      <div class="card-no">9</div>
+      <div class="card-t">
+        <h3>石光咖啡厅</h3>
+        <div class="card-area">八达岭</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">有杏咖啡，边上有图书馆</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区八达岭镇石峡村（石光长城民宿内）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 小蛋糕 + 简餐；民宿餐厅另有长城石烹宴（酱猪脸等非遗菜）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>无</dd></div>
+      <div><dt>✨ 特色</dt><dd>开在民宿边的咖啡店，木石结构、另有公益书店，户外露台抬头即见长城</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（民宿配套，建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>民宿咖啡价位</dd></div>
+      <div><dt>📞 联系</dt><dd>石光长城民宿</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="大庄科" data-text="山谷厨房 大庄科 延庆区大庄科乡东王庄村16号 深山农家风味餐厅，宠物友好庭院；周边山林步道丰富，适合携宠开启徒步路线">
+    <div class="card-hd">
+      <div class="card-no">10</div>
+      <div class="card-t">
+        <h3>山谷厨房</h3>
+        <div class="card-area">大庄科</div>
+      </div>
+    </div>
+    <div class="stars">★★★</div>
+    <p class="rat-note">离昌平近，民宿有水池</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区大庄科乡东王庄村16号</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 西式简餐，和西西里差不多</dd></div>
+      <div><dt>🐾 宠物</dt><dd>有中狗，很会营业</dd></div>
+      <div><dt>✨ 特色</dt><dd>深山农家风味餐厅，宠物友好庭院；周边山林步道丰富，适合携宠开启徒步路线</dd></div>
+      <div><dt>🕐 营业</dt><dd>10:00–18:00（公开信息，建议行前确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>和西西里菜单一样</dd></div>
+      <div><dt>📞 联系</dt><dd>建议自驾前往</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="康庄" data-text="在不 coffee 康庄 延庆区康庄镇马营村 开在村里的咖啡店，2025年媒体关注的延庆村咖新势力；小院安静、风格与本土环境融合">
+    <div class="card-hd">
+      <div class="card-no">11</div>
+      <div class="card-t">
+        <h3>在不 coffee</h3>
+        <div class="card-area">康庄</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">咖啡种类多，老板自己做点心，就是得先电话确认“在不”</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区康庄镇马营村</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 简餐（院中李子树、鹅卵石院落）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>有猫、狗，还有关起来的大型犬</dd></div>
+      <div><dt>✨ 特色</dt><dd>开在村里的咖啡店，2025年媒体关注的延庆村咖新势力；小院安静、风格与本土环境融合</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（建议电话19910729386确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>价格适中</dd></div>
+      <div><dt>📞 联系</dt><dd>村道导航为主，建议自驾前往</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="井庄" data-text="山也伙房 井庄 延庆区井庄镇箭杆岭村2号（弓坊一楼北侧第一间） 隐于箭杆岭山谷的江湖烟火气山野餐厅：食材取自自种菜圃与散养柴鸡，另提供食材采摘体验及民宿服务">
+    <div class="card-hd">
+      <div class="card-no">12</div>
+      <div class="card-t">
+        <h3>山也伙房</h3>
+        <div class="card-area">井庄</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">在伙房边上的猫咖，大众搜不到，对猫最好的咖啡厅</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区井庄镇箭杆岭村2号（弓坊一楼北侧第一间）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>山野农家菜 +披萨烤肉之类的（周末才有）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>猫有独立房间</dd></div>
+      <div><dt>✨ 特色</dt><dd>隐于箭杆岭山谷的江湖烟火气山野餐厅：食材取自自种菜圃与散养柴鸡，另提供食材采摘体验及民宿服务</dd></div>
+      <div><dt>🕐 营业</dt><dd>10:00 起（具体打烊时间建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>待实地确认</dd></div>
+      <div><dt>📞 联系</dt><dd>北京山也伙房餐饮管理有限公司</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="八达岭" data-text="小贺山屋咖啡厅 八达岭 延庆区八达岭镇石佛寺村19号（紧邻八达岭水关长城） 骑士老板骑行途中发现的民宅改造而成：北方传统民宅风又简洁现代，源于电影《背负春天》的「堇小屋」理想，主打旅途歇脚">
+    <div class="card-hd">
+      <div class="card-no">13</div>
+      <div class="card-t">
+        <h3>小贺山屋咖啡厅</h3>
+        <div class="card-area">八达岭</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">手冲NICE，增加了现煮面食</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区八达岭镇石佛寺村19号（紧邻八达岭水关长城）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡+ 现做简餐</dd></div>
+      <div><dt>🐾 宠物</dt><dd>热情的小狗</dd></div>
+      <div><dt>✨ 特色</dt><dd>骑士老板骑行途中发现的民宅改造而成：北方传统民宅风又简洁现代，源于电影《背负春天》的「堇小屋」理想，主打旅途歇脚</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（民宿配套，建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>待实地确认</dd></div>
+      <div><dt>📞 联系</dt><dd>导航「小贺山屋咖啡厅」</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="八达岭" data-text="短腿儿柯基coffee &amp; tea 八达岭 延庆区八达岭镇石佛寺村（悦里长城民宿内，水关长城景区内） 长城脚下柯基主题咖啡馆：从店里就能远眺长城，与民宿同址，撸狗+看长城+喝咖啡一站式">
+    <div class="card-hd">
+      <div class="card-no">14</div>
+      <div class="card-t">
+        <h3>短腿儿柯基Coffee &amp; Tea</h3>
+        <div class="card-area">八达岭</div>
+      </div>
+    </div>
+    <div class="stars">★★★★★</div>
+    <p class="rat-note">喝完可以上顶层打卡长城美照</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区八达岭镇石佛寺村（悦里长城民宿内，水关长城景区内）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡+甜点为主</dd></div>
+      <div><dt>🐾 宠物</dt><dd>4只柯基萌萌哒</dd></div>
+      <div><dt>✨ 特色</dt><dd>长城脚下柯基主题咖啡馆：从店里就能远眺长城，与民宿同址，撸狗+看长城+喝咖啡一站式</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（民宿配套，建议电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>约 ¥51/人</dd></div>
+      <div><dt>📞 联系</dt><dd>导航「悦里长城民宿」</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="康庄" data-text="西独咖啡 康庄 延庆区康庄镇刘浩营村西（野鸭湖国家湿地公园景区内） 藏在野鸭湖湿地公园里的落日咖啡厅：门口木制框架是标志性拍照机位，日落时分点一杯咖啡看芦苇荡被染成金色，是环湖路线上的必打卡点；景区集章打卡点之一">
+    <div class="card-hd">
+      <div class="card-no">15</div>
+      <div class="card-t">
+        <h3>西独咖啡<span class="badge-new">新增</span></h3>
+        <div class="card-area">康庄</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">野鸭湖景区内网红咖啡厅，看落日芦苇的绝佳位置</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区康庄镇刘浩营村西（野鸭湖国家湿地公园景区内）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 甜品（招牌「落日橘子海」气泡美式等）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>未明确标注（景区内，携宠需留意园区规定）</dd></div>
+      <div><dt>✨ 特色</dt><dd>藏在野鸭湖湿地公园里的落日咖啡厅：门口木制框架是标志性拍照机位，日落时分点一杯咖啡看芦苇荡被染成金色，是环湖路线上的必打卡点；景区集章打卡点之一</dd></div>
+      <div><dt>🕐 营业</dt><dd>随景区开放（旺季约 8:30–17:30，建议行前确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>景区咖啡价位（约 ¥40 上下）</dd></div>
+      <div><dt>📞 联系</dt><dd>野鸭湖景区 010-69131166（建议先确认）</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="四海" data-text="motor咖啡 四海 延庆区四海镇南湾村（延四公路旁，亦称「风屿自由摩友小站」） 专属于摩托车爱好者和骑友的山间休憩据点：骑行跑山途中的落脚点，可补充咖啡甜品、与同好交流路线与车况；氛围轻松无规矩，四海镇四季花海核心区附近">
+    <div class="card-hd">
+      <div class="card-no">16</div>
+      <div class="card-t">
+        <h3>motor咖啡<span class="badge-new">新增</span></h3>
+        <div class="card-area">四海</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">摩托车/骑友主题据点，跑山途中的歇脚站</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区四海镇南湾村（延四公路旁，亦称「风屿自由摩友小站」）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>现磨咖啡 + 各类甜品（轻食为主，无正餐）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>未明确标注</dd></div>
+      <div><dt>✨ 特色</dt><dd>专属于摩托车爱好者和骑友的山间休憩据点：骑行跑山途中的落脚点，可补充咖啡甜品、与同好交流路线与车况；氛围轻松无规矩，四海镇四季花海核心区附近</dd></div>
+      <div><dt>🕐 营业</dt><dd>未查到公开信息（建议行前电话确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>价格适中（骑友据点价位）</dd></div>
+      <div><dt>📞 联系</dt><dd>建议到店或经四海镇文旅渠道确认</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="张山营" data-text="一川villa 跑酷山居咖啡 张山营 延庆区张山营镇北张庄村河西区7号 脱胎于深耕体育教育十余年的「一川 parkour」：把跑酷的「无畏、自由、探索」从城市场馆延伸到山野。院内有专属障碍区、林间大草坪、游泳池与私汤，运动后围炉煮茶、喝杯咖啡，倡导全龄友好的高质量陪伴型微度假">
+    <div class="card-hd">
+      <div class="card-no">17</div>
+      <div class="card-t">
+        <h3>一川villa 跑酷山居咖啡<span class="badge-new">新增</span></h3>
+        <div class="card-area">张山营</div>
+      </div>
+    </div>
+    <div class="stars">★★★★</div>
+    <p class="rat-note">跑酷主题山居民宿配套咖啡，2026 年新开</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区张山营镇北张庄村河西区7号</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 民宿配套餐饮（围炉煮茶、私汤下午茶等）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>未明确标注</dd></div>
+      <div><dt>✨ 特色</dt><dd>脱胎于深耕体育教育十余年的「一川 Parkour」：把跑酷的「无畏、自由、探索」从城市场馆延伸到山野。院内有专属障碍区、林间大草坪、游泳池与私汤，运动后围炉煮茶、喝杯咖啡，倡导全龄友好的高质量陪伴型微度假</dd></div>
+      <div><dt>🕐 营业</dt><dd>民宿配套，建议入住或预约时确认</dd></div>
+      <div><dt>💰 价格</dt><dd>民宿价位（房型含欧舒丹备品，约 ¥800 起/间夜）</dd></div>
+      <div><dt>📞 联系</dt><dd>建议经民宿预订平台或官方渠道确认</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="刘斌堡" data-text="青山咖啡 刘斌堡 延庆区刘斌堡乡山南沟村青山园（234 国道旁） 开在青山园休闲农业园区里的咖啡店：园区始建于 1989 年、占地约 200 余亩，集农业观光、亲子娱乐、拓展团建于一体，有迷你动物园、彩虹滑道、真人 cs 等 20 余种体验项目；毗邻百里山水画廊，适合「喝咖啡 + 遛娃」一站式">
+    <div class="card-hd">
+      <div class="card-no">18</div>
+      <div class="card-t">
+        <h3>青山咖啡<span class="badge-new">新增</span></h3>
+        <div class="card-area">刘斌堡</div>
+      </div>
+    </div>
+    <div class="stars">★★★</div>
+    <p class="rat-note">开在青山园景区里，带娃遛弯顺便喝咖啡</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区刘斌堡乡山南沟村青山园（234 国道旁）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 简餐甜品（园区餐饮配套）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>未明确标注（园区有迷你动物园，适合亲子）</dd></div>
+      <div><dt>✨ 特色</dt><dd>开在青山园休闲农业园区里的咖啡店：园区始建于 1989 年、占地约 200 余亩，集农业观光、亲子娱乐、拓展团建于一体，有迷你动物园、彩虹滑道、真人 CS 等 20 余种体验项目；毗邻百里山水画廊，适合「喝咖啡 + 遛娃」一站式</dd></div>
+      <div><dt>🕐 营业</dt><dd>随园区开放（建议行前确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>景区咖啡价位</dd></div>
+      <div><dt>📞 联系</dt><dd>青山园景区（建议经地图/景区电话确认）</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="待确认" data-text="元气·昕诺咖啡 待确认 延庆区（具体地址待确认，公开网络暂未查到明确信息） 「元气·昕诺」为新增店，公开网络暂未检索到确切的地址与门店信息，建议实地探店后补充完善">
+    <div class="card-hd">
+      <div class="card-no">19</div>
+      <div class="card-t">
+        <h3>元气·昕诺咖啡<span class="badge-new">新增</span></h3>
+        <div class="card-area">待确认</div>
+      </div>
+    </div>
+    <div class="stars">待实地确认</div>
+    
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区（具体地址待确认，公开网络暂未查到明确信息）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡（具体待确认）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>待确认</dd></div>
+      <div><dt>✨ 特色</dt><dd>「元气·昕诺」为新增店，公开网络暂未检索到确切的地址与门店信息，建议实地探店后补充完善</dd></div>
+      <div><dt>🕐 营业</dt><dd>待确认</dd></div>
+      <div><dt>💰 价格</dt><dd>待确认</dd></div>
+      <div><dt>📞 联系</dt><dd>待确认</dd></div>
+    </dl>
+  </article>
+  <article class="card" data-area="八达岭" data-text="白窑咖啡 八达岭 延庆区八达岭镇程家窑村30号（长城·宿集民宿内） 长城宿集里的白色拱形建筑，上下两层、摩洛哥风情，咖啡书吧是网红打卡点；门前阿拉斯加迎客，可撸狗喝咖啡；周边可逛石峡关古长城，是「长城脚下喝咖啡」的代表店之一">
+    <div class="card-hd">
+      <div class="card-no">20</div>
+      <div class="card-t">
+        <h3>白窑咖啡<span class="badge-new">新增</span></h3>
+        <div class="card-area">八达岭</div>
+      </div>
+    </div>
+    <div class="stars">★★★★★</div>
+    <p class="rat-note">猫狗友好、长城宿集里的摩洛哥风情咖啡厅</p>
+    <dl>
+      <div><dt>📍 地址</dt><dd>延庆区八达岭镇程家窑村30号（长城·宿集民宿内）</dd></div>
+      <div><dt>🍽 餐食</dt><dd>咖啡 + 甜品 + 红酒 + 茶；隔壁白鹿餐厅（淮扬菜为主，供三餐、早餐自助）</dd></div>
+      <div><dt>🐾 宠物</dt><dd>宠物友好，门口有 5 只温顺的阿拉斯加犬</dd></div>
+      <div><dt>✨ 特色</dt><dd>长城宿集里的白色拱形建筑，上下两层、摩洛哥风情，咖啡书吧是网红打卡点；门前阿拉斯加迎客，可撸狗喝咖啡；周边可逛石峡关古长城，是「长城脚下喝咖啡」的代表店之一</dd></div>
+      <div><dt>🕐 营业</dt><dd>约 09:00–19:00（公开信息，建议行前确认）</dd></div>
+      <div><dt>💰 价格</dt><dd>约 ¥51/人（气泡美式 + 柠檬芝士为招牌搭配）</dd></div>
+      <div><dt>📞 联系</dt><dd>长城·宿集民宿（建议经地图/点评确认）</dd></div>
+    </dl>
+  </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>📦 资料包内容</h2>
+    <p class="sub">整套素材打包下载，含表格、地图网页、设计物料与源码。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>分类</th><th>文件</th><th>说明</th><th>大小</th></tr></thead>
+        <tbody>
+<tr><td class="fi">延庆咖啡店信息表261010_补充版.xlsx</td><td class="fn">20 家咖啡店完整信息表（2 个工作表）</td>
+  <td>19 KB</td><td class="fs">🏆</td></tr><tr><td class="fi">延庆咖啡地图_最终只读版.html</td><td class="fn">可离线查询的交互地图（底图内嵌，无需联网）</td>
+  <td>3.7 MB</td><td class="fs">🏆</td></tr><tr><td class="fi">延庆咖啡地图_手绘标注版.png / .svg</td><td class="fn">带 14 家点位标注的高清手绘地图</td>
+  <td>6 MB</td><td class="fs">🎨</td></tr><tr><td class="fi">延庆手绘总览地图.png / .svg</td><td class="fn">延庆手绘总览地图</td>
+  <td>579 KB</td><td class="fs">🎨</td></tr><tr><td class="fi">延庆手绘总览地图_完整版.png / .svg</td><td class="fn">完整版总览地图</td>
+  <td>732 KB</td><td class="fs">🎨</td></tr><tr><td class="fi">延庆咖啡地图_底图.png（+去地名版/带版权版）</td><td class="fn">三种底图版本</td>
+  <td>8.2 MB</td><td class="fs">🎨</td></tr><tr><td class="fi">延庆地图_乡镇名矢量字.json</td><td class="fn">乡镇名矢量字位置数据</td>
+  <td>110 KB</td><td class="fs">🎨</td></tr><tr><td class="fi">index_source_可读版.html / _styles.css / _script.js</td><td class="fn">地图网页源码（底图占位符化，便于阅读）</td>
+  <td>80 KB</td><td class="fs">📄</td></tr><tr><td class="fi">延庆咖啡店信息表.md / .csv / .xlsx</td><td class="fn">早期版本表格备份</td>
+  <td>31 KB</td><td class="fs">📄</td></tr><tr><td class="fi">延庆手绘地图_使用说明.md / 项目指令_延庆攻略.md</td><td class="fn">使用说明与项目文档</td>
+  <td>11 KB</td><td class="fs">📄</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="disclaim">
+      <b>说明：</b>数据来源为公开网络信息（北京旅游网、延庆融媒、大众点评、搜狐等），
+      整理时间 2026 年 10 月。<b>营业时间、价格、携宠规则可能变动，出发前请务必电话确认。</b>
+      点位为大致方位，手绘地图仅供方位参考。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>北京延庆村咖地图 · 20 家咖啡店全收录　·　整理于 2026-10-14</p>
+    <p>
+      <a href="https://hydemonw.github.io/yanqing-cafe-map/" target="_blank" rel="noopener">在线交互地图</a>
+      <span style="margin:0 10px;color:var(--line)">|</span>
+      <a href="https://github.com/hydemonw/yanqing-cafe-map" target="_blank" rel="noopener">GitHub 仓库</a>
+    </p>
+    <p style="font-size:12px;color:var(--ink3);margin-top:8px">
+      收录 20 家 · 覆盖 8 个乡镇片区 · 地图可离线使用
+    </p>
+  </div>
+</footer>
+
+<script>
+const q = document.getElementById('q'), grid = document.getElementById('grid');
+const cards = [...document.querySelectorAll('.card')], cnt = document.getElementById('cnt');
+let area = 'all';
+
+function apply() {
+  const kw = q.value.trim().toLowerCase();
+  let n = 0;
+  cards.forEach(c => {
+    const okA = area === 'all' || c.dataset.area === area;
+    const okK = !kw || c.dataset.text.includes(kw);
+    const show = okA && okK;
+    c.style.display = show ? '' : 'none';
+    if (show) n++;
+  });
+  cnt.textContent = '共 ' + n + ' 家';
+}
+q.addEventListener('input', apply);
+document.querySelectorAll('.chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    area = btn.dataset.a;
+    apply();
+  });
+});
+</script>
+</body>
+</html>
