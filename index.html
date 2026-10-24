@@ -374,7 +374,7 @@ h1{letter-spacing:1px}
     
 
     <div class="mapbox" id="mapbox">
-      <svg id="map" viewBox="0 0 1672 1276" preserveAspectRatio="xMidYMid meet">
+      <svg id="map" viewBox="0 0 1672 1198" preserveAspectRatio="xMidYMid slice" preserveAspectRatio="xMidYMid meet">
         <defs>
           <!-- 线描咖啡杯徽章 -->
           <g id="pinCup">
@@ -396,6 +396,34 @@ h1{letter-spacing:1px}
             <path d="M -4.5,12.5 L 4.5,12.5" stroke="#B4531B" stroke-width="2" stroke-linecap="round"></path>
             <path d="M 1.5,-3 L 9,-13 M 6,-2.5 L 12.5,-11" stroke="#B4531B" stroke-width="1.5" stroke-linecap="round"></path>
             <path d="M -4,-8 q 1.5,-2 0,-4 M 0.5,-8 q 1.5,-2 0,-4" fill="none" stroke="#D89A66" stroke-width="1.3" stroke-linecap="round" opacity="0.85"></path>
+          </g>
+          <g id="pinCombo" transform="scale(1.18)">
+            <ellipse cx="0" cy="-1" rx="15.4" ry="11.8" fill="#FFF9F0" stroke="#8C3B2E" stroke-width="2.1"></ellipse>
+            <path d="M 0,-10.4 L 0,-3.2" stroke="#E3C9A8" stroke-width="1.1" stroke-linecap="round"></path>
+            <path d="M -11,-8.6 L -5,-8.6 L -5.6,-3.6 Q -5.8,-2.6 -6.8,-2.6 L -9.2,-2.6 Q -10.2,-2.6 -10.4,-3.6 Z" fill="#FFF3E6" stroke="#8C3B2E" stroke-width="1.6" stroke-linejoin="round"></path>
+            <path d="M -5,-7 q 2.2,0 2.2,1.6 t -2.2,1.6" fill="none" stroke="#8C3B2E" stroke-width="1.5"></path>
+            <path d="M -4.4,-9.4 q 1.2,-1.6 0,-3 M -2.6,-9.4 q 1.2,-1.6 0,-3" fill="none" stroke="#D89A66" stroke-width="1.1" stroke-linecap="round" opacity="0.85"></path>
+            <path d="M 4.6,-6.6 L 10.8,-6.6 Q 10.4,-2.6 8.8,-2 L 6.6,-2 Q 5,-2.6 4.6,-6.6 Z" fill="#FFF3E6" stroke="#B4531B" stroke-width="1.6" stroke-linejoin="round"></path>
+            <path d="M 4.3,-6.6 L 11.1,-6.6" stroke="#B4531B" stroke-width="1.6" stroke-linecap="round"></path>
+            <path d="M 5.6,-11 L 8.8,-8.2 M 7.8,-11.2 L 10.6,-8.6" stroke="#B4531B" stroke-width="1.4" stroke-linecap="round"></path>
+          </g>
+          <g id="pinCup2">
+            <ellipse cx="0" cy="-1" rx="13.4" ry="11.1" fill="#FFF9F0" stroke="#8C3B2E" stroke-width="2"></ellipse>
+            <path d="M -6.4,-9.2 L 6.4,-9.2 L 5.4,-1.9 Q 5.2,-0.9 4.2,-0.9 L -4.2,-0.9 Q -5.2,-0.9 -5.4,-1.9 Z"
+                  fill="#FFF3E6" stroke="#8C3B2E" stroke-width="1.8" stroke-linejoin="round"></path>
+            <path d="M -7.1,-9.2 L 7.1,-9.2" stroke="#8C3B2E" stroke-width="1.9" stroke-linecap="round"></path>
+            <path d="M 6.2,-7.8 q 3.1,0 3.1,2.4 t -3.1,2.4" fill="none" stroke="#8C3B2E" stroke-width="1.7"></path>
+            <path d="M -2.3,-11 q 1.6,-2 0,-3.6 M 1.3,-11 q 1.6,-2 0,-3.6"
+                  fill="none" stroke="#D89A66" stroke-width="1.3" stroke-linecap="round" opacity="0.9"></path>
+          </g>
+          <g id="pinCup2Pet">
+            <ellipse cx="0" cy="-1" rx="13.4" ry="11.1" fill="#F4FBF5" stroke="#2F6B3E" stroke-width="2"></ellipse>
+            <path d="M -6.4,-9.2 L 6.4,-9.2 L 5.4,-1.9 Q 5.2,-0.9 4.2,-0.9 L -4.2,-0.9 Q -5.2,-0.9 -5.4,-1.9 Z"
+                  fill="#FFFFFF" stroke="#2F6B3E" stroke-width="1.8" stroke-linejoin="round"></path>
+            <path d="M -7.1,-9.2 L 7.1,-9.2" stroke="#2F6B3E" stroke-width="1.9" stroke-linecap="round"></path>
+            <path d="M 6.2,-7.8 q 3.1,0 3.1,2.4 t -3.1,2.4" fill="none" stroke="#2F6B3E" stroke-width="1.7"></path>
+            <path d="M -2.3,-11 q 1.6,-2 0,-3.6 M 1.3,-11 q 1.6,-2 0,-3.6"
+                  fill="none" stroke="#7FB58D" stroke-width="1.3" stroke-linecap="round" opacity="0.9"></path>
           </g>
           <filter id="psh" x="-60%" y="-60%" width="220%" height="220%">
             <fedropshadow dx="0" dy="1.6" stdDeviation="1.9" flood-color="#5A4632" flood-opacity="0.32"></fedropshadow>
@@ -870,42 +898,34 @@ DATA.forEach(d => {
   const pet = hasPet(d);
   const cy = d.canyin || "";
   const hasCof = /咖啡/.test(cy), hasFood = /美食/.test(cy);
+  const isCombo = hasCof && hasFood;  // 咖啡+美食双标：左右双拼盘
   const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
   g.setAttribute("class", "pin");
   g.setAttribute("transform", `translate(${d.x},${d.y})`);
   g.dataset.id = d.id;
 
   const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-  use.setAttribute("href", !hasCof ? "#pinFood" : (pet ? "#pinCupPet" : "#pinCup"));
+  use.setAttribute("href", isCombo ? "#pinCombo" : (!hasCof ? "#pinFood" : (pet ? "#pinCup2Pet" : "#pinCup2")));
   use.setAttribute("class", "cup");
   use.setAttribute("filter", "url(#psh)");
   g.appendChild(use);
 
   const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  t.setAttribute("y", d.id >= 10 ? "5.5" : "5");
+  t.setAttribute("y", isCombo ? "9.4" : (hasCof ? "9.3" : (d.id >= 10 ? "5.5" : "5")));
   t.setAttribute("text-anchor", "middle");
-  t.setAttribute("font-size", d.id >= 10 ? "11.5" : "12.5");
-  t.setAttribute("font-weight", "700");
-  t.setAttribute("fill", !hasCof ? "#9A4A12" : (pet ? "#2F6B3E" : "#8C3B2E"));
+  t.setAttribute("font-size", isCombo ? (d.id >= 10 ? "13.5" : "14.5") : (hasCof ? (d.id >= 10 ? "11.8" : "12.8") : (d.id >= 10 ? "11.5" : "12.5")));
+  t.setAttribute("font-weight", "800");
+  t.setAttribute("fill", isCombo ? "#C2410C" : (!hasCof ? "#9A4A12" : (pet ? "#2F6B3E" : "#8C3B2E")));
+  if (isCombo) {  // 双标店编号：描白边 + 略放大，突出但不刺眼
+    t.setAttribute("paint-order", "stroke");
+    t.setAttribute("stroke", "#FFFBF3");
+    t.setAttribute("stroke-width", "3");
+    t.setAttribute("stroke-linejoin", "round");
+  }
   t.textContent = d.id;
   g.appendChild(t);
 
-  // 咖啡+美食 双标：杯徽右上角加橙色小角标
-  if (hasCof && hasFood) {
-    const bd = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    c.setAttribute("cx", "12"); c.setAttribute("cy", "-10"); c.setAttribute("r", "4.6");
-    c.setAttribute("fill", "#B4531B"); c.setAttribute("stroke", "#FFFDF8");
-    c.setAttribute("stroke-width", "1.4");
-    bd.appendChild(c);
-    [["M 9.4,-11.2 L 14.6,-8.8"], ["M 9.4,-8.8 L 14.6,-11.2"]].forEach(dd => {
-      const l = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      l.setAttribute("d", dd[0]); l.setAttribute("stroke", "#FFF3E6");
-      l.setAttribute("stroke-width", "1.1"); l.setAttribute("stroke-linecap", "round");
-      bd.appendChild(l);
-    });
-    g.appendChild(bd);
-  }
+  // 双标信息已由「左右双拼盘」表达，不再挂右上角小角标
 
   // 店名标签（默认显示）
   const shortName = d.short || d.name.replace(/[（(].*?[）)]/g, "").replace(/Coffee & Tea/, "").trim();
@@ -926,16 +946,7 @@ DATA.forEach(d => {
   co.setAttribute("text-anchor", "middle");
   g.appendChild(co);
 
-  // 「已调整」小圆点
-  const md = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  md.setAttribute("class", "movedot");
-  md.setAttribute("cx", "13"); md.setAttribute("cy", "-9");
-  md.setAttribute("r", "3.6");
-  md.setAttribute("fill", "#D8A05A");
-  md.setAttribute("stroke", "#FFFDF8");
-  md.setAttribute("stroke-width", "1.4");
-  g.appendChild(md);
-
+  
   cur[d.id] = { x: d.x, y: d.y, labDy: d.labDy != null ? d.labDy : 30 };
   g.addEventListener("click", () => { openDetail(d.id, true); });
   g.addEventListener("mouseenter", () => g.querySelector(".plabel").classList.add("on"));
